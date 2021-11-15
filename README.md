@@ -62,24 +62,36 @@ Baseline Testing RMSE: 0.9347815028684475
 
 After establishing the baseline, I built a pipeline with Scaler, PCA, and KNN. After fitting to my training set, I printed the evaluation metrics: 
 
-KNN Training RMSE: 0.5608036294897725
-KNN Testing RMSE: 0.6905462130483996
+KNN Training RMSE: 0.571496151629592
+KNN Testing RMSE: 0.7003582662754724
 
-KNN Training R2: 0.6412607033888489
-KNN Testing R2: 0.45428483858295043
+KNN Training R2: 0.627450537276609
+KNN Testing R2: 0.4386663960088468
 
-Because these scores weren't very accurate, I decided to also try a model using Random Forest. 
-This yielded the following metrics: 
+Because these scores weren't very accurate, I decided to also try a model using Linear Regression and Random Forest. 
+These models yielded the following metrics: 
 
-RF Training RMSE: 0.21568266214947515
-RF Testing RMSE: 0.5796058835347317
+LinReg Training RMSE: 0.6522592177142857
+LinReg Testing RMSE: 0.6825993951229261
 
-RF Training R2: 0.946937489740062
-RF Testing R2: 0.6155444855980565
+LinReg Training R2: 0.5147139901189632
+LinReg Testing R2: 0.46677276637478904
 
-Because the RF R2 scores were higher than those of the KNN model, I chose to hypertune the RF model to increase the R2 scores. 
+RF Training RMSE: 0.22302074912324923
+RF Testing RMSE: 0.5977688973509652
 
-I selected different ranges to test within the random forest hyperparameters: max depth, n estimators, and min samples split. I used GridSearch to determine the best hyperparameters. 
-I then tested the gridsearch model, but the run time exceded two hours without results.
+RF Training R2: 0.9432654177473786
+RF Testing R2: 0.5910717134751065
 
-For now, I am using the Random Forest model as my production model as it performed better than the KNN model. This model also yielded a lower RSME score than the baseline model created using the target feature mean, which indicates that the Random Forest model provides more accurate predictions. I will continue to attempt to better tune the parameters to improve the RMSE and R2 scores. 
+Because the RF R2 scores were higher than those of the KNN and Linear Regression models, I chose to hypertune the RF model to increase the R2 scores. 
+
+I selected different ranges to test within the random forest hyperparameters: max depth, n estimators, and min samples split. The hypertuned RF model yielded the following metrics:
+Tuned RF Training RMSE: 0.23146967953106967
+Tuned RF Testing RMSE: 0.5943560121053459
+
+Tuned RF Training R2: 0.9388853200706702
+Tuned RF Testing R2: 0.595727831414443
+
+The metrics are slightly better than the default model. This model explains roughly 60% of variance in the data and provides predictions that are roughly .59 off from the actual average game ratings. While these may not seem like ideal test scores, the model does yield a lower RSME score than the baseline model created using the target feature mean, which indicates that the Random Forest model provides more accurate predictions than if a model just predicted the dataset's mean rating for each game.
+
+I attempted to identify which features are the most important in the model, but ran into errors. My next steps for this project would be to understand and correct the errors so that I could drop the least important features to improve the model as well as provide recommendations to game creators for which features to consider most to achieve high game ratings. 
